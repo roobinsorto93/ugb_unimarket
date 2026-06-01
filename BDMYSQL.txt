@@ -1,0 +1,81 @@
+
+CREATE DATABASE unimarket;
+USE unimarket;
+
+select*from users;
+CREATE TABLE users (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL,
+    email VARCHAR(100) UNIQUE NOT NULL,
+    password VARCHAR(255) NOT NULL,
+    sede ENUM('San Miguel', 'Usulutan') NOT NULL,
+    foto_perfil VARCHAR(255) NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+);
+
+CREATE TABLE publicaciones (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NOT NULL,
+    categoria ENUM('Comida', 'Apuntes', 'Servicios') NOT NULL,
+    titulo VARCHAR(150) NOT NULL,
+    descripcion TEXT NOT NULL,
+    precio DECIMAL(10,2) NULL,
+    imagen VARCHAR(255) NULL,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE login_logs (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    user_id BIGINT NULL,
+    email VARCHAR(100) NOT NULL,
+    ip_address VARCHAR(45) NULL,
+    user_agent TEXT NULL,
+    success BOOLEAN NOT NULL DEFAULT FALSE,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE SET NULL
+);
+
+
+CREATE TABLE calificaciones (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    publicacion_id BIGINT NOT NULL,
+    user_id BIGINT NOT NULL,
+    valor TINYINT UNSIGNED NOT NULL CHECK (valor BETWEEN 1 AND 5),
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    UNIQUE KEY unique_calificacion (publicacion_id, user_id),
+    FOREIGN KEY (publicacion_id) REFERENCES publicaciones(id) ON DELETE CASCADE,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+
+CREATE TABLE mensajes (
+    id BIGINT AUTO_INCREMENT PRIMARY KEY,
+    publicacion_id BIGINT NOT NULL,
+    emisor_id BIGINT NOT NULL,
+    receptor_id BIGINT NOT NULL,
+    contenido TEXT NOT NULL,
+    leido BOOLEAN DEFAULT FALSE,
+    created_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (publicacion_id) REFERENCES publicaciones(id) ON DELETE CASCADE,
+    FOREIGN KEY (emisor_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (receptor_id) REFERENCES users(id) ON DELETE CASCADE
+);
+
+CREATE INDEX idx_login_logs_user_id ON login_logs(user_id);
+CREATE INDEX idx_login_logs_email ON login_logs(email);
+CREATE INDEX idx_login_logs_created_at ON login_logs(created_at);
+CREATE INDEX idx_calificaciones_publicacion ON calificaciones(publicacion_id);
+CREATE INDEX idx_calificaciones_user ON calificaciones(user_id);
+CREATE INDEX idx_publicaciones_user_id ON publicaciones(user_id);
+CREATE INDEX idx_publicaciones_categoria ON publicaciones(categoria);
+CREATE INDEX idx_publicaciones_created_at ON publicaciones(created_at);
+CREATE INDEX idx_mensajes_emisor ON mensajes(emisor_id);
+CREATE INDEX idx_mensajes_receptor ON mensajes(receptor_id);
+CREATE INDEX idx_mensajes_publicacion ON mensajes(publicacion_id);
