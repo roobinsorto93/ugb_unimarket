@@ -1,3 +1,94 @@
+# Mural UGB - Plataforma de Anuncios Universitarios
+
+Plataforma web para la **Universidad Gerardo Barrios** (sedes San Miguel y Usulután) que permite a los estudiantes publicar anuncios clasificados en **Comida**, **Apuntes** y **Servicios**, calificar publicaciones, enviar mensajes entre usuarios y gestionar su perfil. El sistema utiliza autenticación con correo institucional `@ugb.edu.sv`.
+
+##  Integrantes del equipo
+
+| Nombre | Código de estudiante |
+|--------|----------------------|
+| Roobin Edgardo Soto Hernández | SMSS089524|
+| Katherine Milagro Guevara de Hernández | SMSS104124 |
+| Justin Steven Franco Martínez | SMSS0888124 |
+
+
+
+## Tecnologías utilizadas
+
+- **Backend:** Laravel 12 (PHP 8.2+)
+- **Base de datos:** MySQL 8.0
+- **Frontend:** Tailwind CSS, Font Awesome, JavaScript (animaciones nativas)
+- **Gestor de base de datos recomendado:** MySQL Workbench 
+- **Control de versiones:** Git + GitHub
+
+## Instalación y configuración local
+
+### Requisitos previos
+- PHP >= 8.1
+- Composer
+- MySQL Server (8.0 o superior)
+- Node.js y NPM (opcional, solo si se compilan assets – no es necesario para este proyecto)
+
+### instalar y ejecutar
+
+descagar el archivo que contiene el proyecto abrirlo en visual studio 
+luego abrir una nueva terminal y escribir
+ugb_unimarket
+php artisan serve
+luego presionar control y hacer click a un enlace
+y ya estaria listo para correr el programa
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
